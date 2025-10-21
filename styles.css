@@ -136,6 +136,44 @@ body {
     /* Transição suave para voltar ao centro */
     transition: transform 0.1s ease-out;
 }
+/* Estilo do Botão de Ação */
+#action-button {
+    /* Posicionamento */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    /* Tamanho e Aparência */
+    width: 100px;
+    height: 100px;
+    background-color: rgba(150, 150, 150, 0.6);
+    border-radius: 50%; /* Círculo */
+    
+    /* Centralizar o texto "E" */
+    display: none; /* Começa escondido */
+    justify-content: center;
+    align-items: center;
+    
+    /* Estilo do Texto */
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, sans-serif;
+    
+    /* Outros */
+    z-index: 10;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Efeito de "pressionado" */
+#action-button:active,
+#action-button.pressed {
+    background-color: rgba(150, 150, 150, 0.9);
+    transform: scale(0.95);
+}
 
 canvas {
     display: none;

@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff; /* A cor das "barras pretas" */
+    font-family: 'Press Start 2P', cursive;
+    overflow: hidden; /* Esconde as barras de rolagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    
+     /* 1. Define a imagem de fundo */
+    background-image: url('https://uploads.onecompiler.io/43rztqetx/43zh9k8ba/papibagrigafroisja.png'); /* <-- ATENÇÃO AO CAMINHO! */
+
+    /* 2. Garante que a imagem cubra toda a tela sem distorcer */
+    background-size: cover;
+
+    /* 3. Centraliza a imagem na tela */
+    background-position: center center;
+
+    /* 4. Evita que a imagem se repita */
+    background-repeat: no-repeat;
+    
+    /* O fundo preto só aparecerá se a imagem não carregar */
+    background-color: #000; 
+    
+    &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Sombra interna que cria o efeito de vinheta */
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
+    pointer-events: none; /* Garante que a camada não intercepte cliques */
+}
+}
+
+
+/* --- Estilos da Tela de Início --- */
+#start-screen {
+    text-align: center;
+    max-width: 800px;
+    
+    
+    /* Adiciona um preenchimento para o texto não ficar colado nas bordas */
+    padding: 40px;
+    
+    /* Adiciona bordas arredondadas para um visual mais suave */
+    border-radius: 10px;
+}
+
+.game-title {
+    font-size: 4rem; /* 4 vezes o tamanho da fonte padrão */
+    color: #8a4a0e; /* Um marrom claro  */
+    text-shadow: 3px 3px 0px #331c06; /* Sombra marrom escuro para dar um efeito 3D */
+    margin-bottom: 40px;
+}
+
+.game-summary {
+    font-size: 1rem;
+    line-height: 1.6; /* Espaçamento entre linhas para melhor leitura */
+    max-width: 600px;
+    margin: 0 auto 60px; /* Margem automática nas laterais para centralizar */
+    color: #ddd;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6); /* Preto com 60% de opacidade */
+    padding: 20px 30px; /* Espaçamento interno */
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Borda sutil */
+    border-radius: 5px; /* Bordas levemente arredondadas */
+}
+
+.start-prompt {
+    font-size: 1.2rem;
+    color: #FFD700; /* Cor de ouro */
+    text-shadow: 2px 2px 4px #000;
+    animation: blink 1.5s step-end infinite; /* Animação de piscar */
+}
+
+/* Animação para o texto piscar */
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.credits {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.credits p {
+    margin: 0px;
+}
+
+/* Estilos do Joystick Virtual */
+#joystick-container {
+    /* Posicionamento */
+    position: fixed; /* Fica fixo na tela */
+    bottom: 30px;
+    left: 30px;
+    
+    /* Tamanho e Aparência (Círculo Base) */
+    width: 150px;
+    height: 150px;
+    background-color: rgba(100, 100, 100, 0.3);
+    border-radius: 50%; /* Faz ser um círculo */
+    
+    /* Outros */
+    display: none; /* Começa escondido (JS vai mostrar em celular) */
+    z-index: 10;
+    -webkit-user-select: none; /* Impede seleção de texto */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#joystick-stick {
+    /* Posicionamento (relativo ao container) */
+    position: absolute;
+    top: 35px; /* (150 - 80) / 2 */
+    left: 35px; /* (150 - 80) / 2 */
+
+    /* Tamanho e Aparência (Botão) */
+    width: 80px;
+    height: 80px;
+    background-color: rgba(150, 150, 150, 0.6);
+    border-radius: 50%;
+    
+    /* Transição suave para voltar ao centro */
+    transition: transform 0.1s ease-out;
+}
+
+canvas {
+    display: none;
+    max-width: 100%;
+    max-height: 100%
+    object-fit: contain;
+    border: 2px solid #00ffff;
+    background-color: black;
+    image-rendering: pixelated; 
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}

@@ -18,6 +18,7 @@ const ctx = canvas.getContext('2d');
 // Referências do Joystick ---
 const joystickContainer = document.getElementById('joystick-container');
 const joystickStick = document.getElementById('joystick-stick');
+const actionButton = document.getElementById('action-button');
 
 // Configuração para manter o pixel art nítido
 ctx.imageSmoothingEnabled = false;
@@ -140,6 +141,7 @@ function initJoystick() {
     }
     
     joystickContainer.style.display = 'block'; // Mostra o joystick
+    actionButton.style.display = 'flex';       // <-- NOVO: Mostra o botão de ação
     updateJoystickPosition(); // Calcula a posição
     
     // "Ouvintes" de eventos de toque
@@ -148,6 +150,17 @@ function initJoystick() {
     document.addEventListener('touchmove', onTouchMove, { passive: false });
     document.addEventListener('touchend', onTouchEnd, { passive: false });
     document.addEventListener('touchcancel', onTouchEnd, { passive: false });
+    
+    actionButton.addEventListener('touchstart', (event) => {
+        event.preventDefault();
+        actionButton.classList.add('pressed'); // Adiciona efeito visual
+        handleInteraction();
+    }, { passive: false });
+
+    actionButton.addEventListener('touchend', (event) => {
+        event.preventDefault();
+        actionButton.classList.remove('pressed'); // Remove efeito visual
+    }, { passive: false });
 }
 
 function onTouchStart(event) {
@@ -257,10 +270,23 @@ function onTouchEnd(event) {
 
 // Adciona os "ouvintes" de eventos
 document.addEventListener('keydown', (event) => {
+    // Previne que a tecla fique "spammando" se for segurada
+    if (event.repeat) return;
+  
     if (event.key in keys) {
         event.preventDefault();
         keys[event.key] = true;
     
+    }
+    // --- NOVO: Lógica de Interação ---
+    if (event.key === 'Enter' || event.key === 'e' || event.key === 'E') {
+        event.preventDefault();
+
+        // Só interage se o jogo estiver rodando (canvas visível)
+        const canvasStyle = window.getComputedStyle(canvas);
+        if (canvasStyle.display === 'block') {
+            handleInteraction();
+        }
     }
 });
 
@@ -272,6 +298,10 @@ document.addEventListener('keyup', (event) => {
 });
 
 // --- 6. FUNÇÕES PRINCIPAIS DO JOGO ---
+
+// --- NOVO: Função Central de Interação ---
+function handleInteraction() {
+}
 
 function resizeCanvas() {
   

@@ -2,12 +2,12 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #fff; /* A cor das "barras pretas" */
     font-family: 'Press Start 2P', cursive;
     overflow: hidden; /* Esconde as barras de rolagem */
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100vw;
     height: 100vh;
     position: relative;
     
@@ -27,30 +27,48 @@ body {
     background-color: #000; 
     
     &:after {
+
     content: '';
+
     position: absolute;
+
     top: 0;
+
     left: 0;
+
     width: 100%;
+
     height: 100%;
+
     /* Sombra interna que cria o efeito de vinheta */
+
     box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
+
     pointer-events: none; /* Garante que a camada não intercepte cliques */
+
 }
+   
 }
 
 
 /* --- Estilos da Tela de Início --- */
 #start-screen {
+    display: flex; /* Garante que a tela esteja visível */
+    flex-direction: column; /* Empilha os itens verticalmente */
+    align-items: center; /* Centraliza os itens horizontalmente */
     text-align: center;
     max-width: 800px;
-    
-    
     /* Adiciona um preenchimento para o texto não ficar colado nas bordas */
     padding: 40px;
-    
     /* Adiciona bordas arredondadas para um visual mais suave */
     border-radius: 10px;
+    position: fixed; /* Ou 'absolute' se preferir */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+    z-index: 100; /* Garante que fique sobre outros elementos */
+    color: white; /* Cor do texto padrão */
+    box-sizing: border-box;
 }
 
 .game-title {
@@ -177,11 +195,9 @@ body {
 
 canvas {
     display: none;
-    max-width: 100%;
-    max-height: 100%
-    object-fit: contain;
     border: 2px solid #00ffff;
     background-color: black;
+    box-sizing: border-box;
     image-rendering: pixelated; 
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;

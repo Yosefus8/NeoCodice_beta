@@ -2690,7 +2690,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initJoystick();
     initClickToMove();
     initDebugTools();
-    startGame();
 
     // Preenchimento das funções de input para garantir que existem
     // (O seu ficheiro já deve ter estas definições completas, isto é uma salvaguarda)
@@ -2822,3 +2821,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', initAudio, { once: true });
     document.addEventListener('keydown', initAudio, { once: true });
 });
+

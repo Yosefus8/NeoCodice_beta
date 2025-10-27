@@ -625,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
             questAtiva = false;
 
             // Imagem e cor variam conforme o mapa atual
-            const imgVitoria = currentLevelId === 'japan' ? 'img/japao_vitoria.png' : 'img/egito_vitoria.png';
+            const imgVitoria = currentLevelId === 'japan' ? 'img/japao_intro.png' : 'img/japao_intro.png';
             const corVitoria = currentLevelId === 'japan' ? 'rgba(0, 0, 160, 0.8)' : 'rgba(0, 120, 0, 0.8)';
 
             mostrarCenaComDialogoCor(
@@ -2821,4 +2821,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', initAudio, { once: true });
     document.addEventListener('keydown', initAudio, { once: true });
 });
+
 

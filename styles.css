@@ -202,3 +202,73 @@ canvas {
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
 }
+
+@media (max-width: 900px) {
+
+  body {
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  #start-screen {
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+  }
+
+  .game-title {
+    font-size: 2rem;
+    text-shadow: 2px 2px 0px #000;
+    margin-bottom: 20px;
+  }
+
+  .game-summary {
+    font-size: 0.8rem;
+    padding: 10px 15px;
+  }
+
+  .start-prompt {
+    font-size: 0.9rem;
+  }
+
+  /* Joystick e botão de ação mais compactos */
+  #joystick-container {
+    width: 100px;
+    height: 100px;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(100, 100, 100, 0.25);
+    display: flex !important;
+  }
+
+  #joystick-stick {
+    width: 60px;
+    height: 60px;
+    top: 20px;
+    left: 20px;
+  }
+
+  #action-button {
+    width: 80px;
+    height: 80px;
+    bottom: 20px;
+    right: 20px;
+    display: flex !important;
+    font-size: 32px;
+  }
+
+  canvas {
+    width: 100vw !important;
+    height: auto !important;
+    max-height: 100vh;
+    border: none;
+  }
+
+  /* Diálogos — faixas menores e fontes ajustadas */
+  .dialogue-box, .dialogue-container div {
+    font-size: 12px !important;
+    padding: 15px !important;
+    line-height: 1.4 !important;
+  }
+}

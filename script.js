@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
     canvas.style.imageRendering = 'pixelated';
-    let digitarTimer = null;
     const joystickContainer = document.getElementById('joystick-container');
     const joystickStick = document.getElementById('joystick-stick');
     const actionButton = document.getElementById('action-button');
@@ -743,7 +742,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    let questsConcluidasJapao = 0;
     let portalJapaoAtivo = false;
 
     function verificarTodasQuestsConcluidasJapao() {
@@ -784,18 +782,6 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
     }
-
-
-    function ativarPortalJapaoBiblioteca() {
-        const nivel = levels['japan'];
-        const portal = nivel.interactables.find(i => i.id === 'portal_library');
-        if (portal) {
-            portal.active = true;
-            console.log('[PORTAL] Portal de volta à biblioteca ativado no Japão!');
-        }
-    }
-
-
 
     function ativarPortalPiramide() {
         const nivel = levels['egypt'];
@@ -922,23 +908,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1600);
     }
 
-
-    function ativarPortalBiblioteca() {
-        if (isDialogOpen || isLoadingLevel) return;
-
-        console.log('[PORTAL] Ativando portal de retorno à biblioteca...');
-        isDialogOpen = true;
-        isLoadingLevel = true;
-
-        //  Mostra diálogo inicial de ativação
-        mostrarCenaComDialogoCor(
-            'img/portal_library.png',
-            'O portal começa a brilhar intensamente... a mesma energia do livro ecoa nele.',
-            'rgba(0, 60, 160, 0.8)',
-            () => iniciarTransicaoBiblioteca()
-        );
-    }
-
     function iniciarTransicaoBiblioteca() {
         console.log('[TRANSIÇÃO] Iniciando retorno à biblioteca...');
 
@@ -998,19 +967,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     // 💬 1️⃣ Primeira fala da voz misteriosa
                     setTimeout(() => {
                         mostrarCenaComDialogoCor(
-                            'img/livrobt.png',
+                            'img/livrobtj.png',
                             'Voz Misteriosa:\n\n"As páginas não estavam vazias... o mundo é que havia esquecido suas histórias."',
                             'rgba(0, 60, 160, 0.8)',
                             () => {
                                 //  Segunda fala da voz misteriosa
                                 mostrarCenaComDialogoCor(
-                                    'img/livrobt.png',
+                                    'img/livrobtj.png',
                                     'Voz Misteriosa:\n\n"Enquanto houver quem leia, quem conte e quem preserve... nenhuma história se perde."',
                                     'rgba(0, 60, 160, 0.8)',
                                     () => {
                                         // Reflexão final do protagonista
                                         mostrarCenaComDialogoCor(
-                                            'img/livrobt.png',
+                                            'img/livrobtj.png',
                                             'Você:\n\n"Então é isso... os livros não guardam só palavras. Eles guardam o que somos."',
                                             'rgba(0, 60, 160, 0.8)',
                                             () => {
@@ -1289,27 +1258,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function criarPortalBibliotecaJapao() {
-        const nivel = levels['japan'];
-
-        // evita duplicar
-        if (nivel.interactables.some(i => i.id === 'portal_biblioteca')) return;
-
-        nivel.interactables.push({
-            id: 'portal_biblioteca',
-            x: 1050, // ajuste a posição
-            y: 592,
-            width: 40,
-            height: 40,
-            active: true,
-            concluida: false,
-            errouUltima: false,
-            bloqueado: false,
-            action: () => iniciarTransicaoBiblioteca()
-        });
-
-        console.log('[PORTAL] Portal para biblioteca criado no Japão!');
-    }
     let brilhoPortalJapao = null; // variável global (adicione fora de qualquer função)
 
     function destacarPortalJapao() {
@@ -1442,7 +1390,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const texto = "Já fazia muito tempo que não vinha nesse lugar, está bem bagunçado... ";
         let i = 0;
-        let digitarTimer = null;
 
         function digitarTexto() {
             if (i === 0) iniciarSomDigitacaoGlobal(); // inicia o som global
@@ -1527,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- "Banco de Dados" dos Níveis ---
     const levels = {
         'library': {
-            mapSrc: 'https://uploads.onecompiler.io/43rzumf93/44293xhug/biblioteca_map.png',
+            mapSrc: 'img/mapalibrary.png',
             mapWidth: 1280,
             mapHeight: 717,
             startPos: { x: 641, y: 256 },
@@ -1570,20 +1517,20 @@ document.addEventListener('DOMContentLoaded', () => {
                                     () => {
                                         console.log('[LIVRO] Jogador terminou o diálogo — preparando transição para o Egito...');
 
-                                        // 🔧 Correção: reset de estados + garantia de áudio
+                                        // Correção: reset de estados + garantia de áudio
                                         setTimeout(() => {
                                             isDialogOpen = false;
                                             isLoadingLevel = false;
                                             initAudio();
 
-                                            // 🔄 Garante que o loop do jogo está ativo antes de trocar o mapa
+                                            // Garante que o loop do jogo está ativo antes de trocar o mapa
                                             if (!isGameLoopRunning) {
                                                 console.log('[LIVRO] Reiniciando loop de jogo antes da transição.');
                                                 isGameLoopRunning = true;
                                                 requestAnimationFrame(gameLoop);
                                             }
 
-                                            // 🔥 Transição segura
+                                            // Transição segura
                                             try {
                                                 console.log('[LIVRO] Iniciando transição cinematográfica...');
                                                 transicaoParaEgitoComCena();
@@ -1764,6 +1711,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 150); // delay pequeno para evitar reentrância imediata
         }
     }
+
     function iniciarDebugJapao() {
         console.log('[DEBUG] Iniciando modo debug: JAPÃO');
 
@@ -1995,14 +1943,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', (event) => {
         if (event.repeat) return;
 
-        // ⛔ Se o foco estiver em um campo de texto (input), não bloqueia o E
+        // Se o foco estiver em um campo de texto (input), não bloqueia o E
         if (document.activeElement && document.activeElement.tagName === 'INPUT') {
             return;
         }
 
         // Se o diálogo estiver aberto, não deixa o jogo processar o "E"
         if (isDialogOpen) {
-            return; // 🔒 Bloqueia o handleInteraction e movimento
+            return; // Bloqueia o handleInteraction e movimento
         }
 
         const canvasStyle = window.getComputedStyle(canvas);
@@ -2310,90 +2258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.x = Math.max(0, Math.min(camera.x, levelData.mapWidth - camera.width));
         camera.y = Math.max(0, Math.min(camera.y, levelData.mapHeight - camera.height));
 
-        let indicadorCriado = false;
-        let indicador = null;
-
-        function mostrarIndicadorInteracao() {
-            const levelData = levels[currentLevelId];
-            if (!levelData || !levelData.interactables) return;
-
-            const box = calculatePlayerInteractionBox();
-            let perto = false;
-
-            for (const item of levelData.interactables) {
-                if (item.active && checkCollision(box, item)) {
-                    perto = true;
-                    break;
-                }
-            }
-
-            // cria o indicador apenas uma vez
-            if (!indicadorCriado) {
-                indicador = document.createElement('div');
-                indicador.id = 'indicadorE';
-                indicador.innerText = 'E';
-                Object.assign(indicador.style, {
-                    position: 'absolute',
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    background: 'rgba(0, 60, 160, 0.85)',
-                    color: 'white',
-                    fontFamily: "'Press Start 2P', cursive",
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '16px',
-                    zIndex: '9999',
-                    animation: 'pulsar 1s infinite',
-                    transition: 'opacity 0.3s ease',
-                    opacity: '0'
-                });
-                document.body.appendChild(indicador);
-
-                const style = document.createElement('style');
-                style.innerHTML = `
-            @keyframes pulsar {
-                0% { transform: scale(1); opacity: 0.9; }
-                50% { transform: scale(1.1); opacity: 1; }
-                100% { transform: scale(1); opacity: 0.9; }
-            }`;
-                document.head.appendChild(style);
-
-                indicadorCriado = true;
-            }
-
-            if (indicador) {
-                indicador.style.opacity = perto ? '1' : '0';
-                if (perto) {
-                    indicador.style.left = `${player.x + 32}px`;
-                    indicador.style.top = `${player.y - 40}px`;
-                }
-            }
-        }
-        if (currentLevelId === 'egypt') {
-            const nivel = levels['egypt'];
-            const playerBox = calculatePlayerInteractionBox();
-
-            for (const i of nivel.interactables) {
-                if (i.isPortal && i.active && checkCollision(playerBox, i)) {
-                    iniciarTransicaoJapao();
-                    break;
-                }
-            }
-        }
-        // --- Verifica se o jogador entrou no portal do Japão para a biblioteca ---
-        if (currentLevelId === 'japan') {
-            const levelData = levels['japan'];
-            const playerBox = calculatePlayerInteractionBox();
-
-            for (const hotspot of levelData.hotspots || []) {
-                if (hotspot.isPortal && checkCollision(playerBox, { x: hotspot.x - 40, y: hotspot.y - 40, width: 80, height: 80 })) {
-                    iniciarTransicaoBiblioteca();
-                    break;
-                }
-            }
-        }
+    
 
     }
 
@@ -2693,64 +2558,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Preenchimento das funções de input para garantir que existem
     // (O seu ficheiro já deve ter estas definições completas, isto é uma salvaguarda)
-    if (typeof onTouchStart !== 'function') {
-        window.onTouchStart = function (event) {
-            event.preventDefault();
-            if (joystick.active) return;
-            const touch = event.changedTouches[0];
-            joystick.active = true;
-            joystick.touchId = touch.identifier;
-            onTouchMove(event);
-        };
+    // --- JOYSTICK E CONTROLE TOUCH ---
+const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent);
 
-        window.onTouchMove = function (event) {
-            if (!joystick.active) return;
-            let touch;
-            for (let i = 0; i < event.changedTouches.length; i++) {
-                if (event.changedTouches[i].identifier === joystick.touchId) {
-                    touch = event.changedTouches[i];
-                    break;
-                }
-            }
-            if (!touch) return;
-            event.preventDefault();
-            let dx = touch.clientX - joystick.baseX;
-            let dy = touch.clientY - joystick.baseY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance > joystick.radius) {
-                dx = (dx / distance) * joystick.radius;
-                dy = (dy / distance) * joystick.radius;
-            }
-            joystickStick.style.transform = `translate(${dx}px, ${dy}px)`;
-            keys.ArrowUp = keys.ArrowDown = keys.ArrowLeft = keys.ArrowRight = false;
-            if (distance < joystick.deadzone) return;
-            const absDx = Math.abs(dx);
-            const absDy = Math.abs(dy);
-            if (absDx > absDy) {
-                if (dx > 0) keys.ArrowRight = true;
-                else keys.ArrowLeft = true;
-            } else {
-                if (dy > 0) keys.ArrowDown = true;
-                else keys.ArrowUp = true;
-            }
-        };
+if (isMobile) {
+    joystickContainer.style.display = "flex";
+    actionButton.style.display = "flex";
 
-        window.onTouchEnd = function (event) {
-            if (!joystick.active) return;
-            let isOurTouch = false;
-            for (let i = 0; i < event.changedTouches.length; i++) {
-                if (event.changedTouches[i].identifier === joystick.touchId) {
-                    isOurTouch = true;
-                    break;
-                }
-            }
-            if (!isOurTouch) return;
-            joystick.active = false;
-            joystick.touchId = null;
-            joystickStick.style.transform = 'translate(0px, 0px)';
-            keys.ArrowUp = keys.ArrowDown = keys.ArrowLeft = keys.ArrowRight = false;
-        };
-    }
+    const joystick = {
+        active: false,
+        radius: 60,
+        baseX: 0,
+        baseY: 0,
+        touchId: null,
+        deadzone: 10,
+    };
+
+    // toque inicial
+    joystickContainer.addEventListener("touchstart", (e) => {
+        const touch = e.changedTouches[0];
+        const rect = joystickContainer.getBoundingClientRect();
+        joystick.active = true;
+        joystick.touchId = touch.identifier;
+        joystick.baseX = rect.left + rect.width / 2;
+        joystick.baseY = rect.top + rect.height / 2;
+    });
+
+    // movimento do toque
+    joystickContainer.addEventListener("touchmove", (e) => {
+        if (!joystick.active) return;
+        let touch = [...e.changedTouches].find(t => t.identifier === joystick.touchId);
+        if (!touch) return;
+        e.preventDefault();
+
+        let dx = touch.clientX - joystick.baseX;
+        let dy = touch.clientY - joystick.baseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance > joystick.radius) {
+            dx = (dx / distance) * joystick.radius;
+            dy = (dy / distance) * joystick.radius;
+        }
+
+        joystickStick.style.transform = `translate(${dx}px, ${dy}px)`;
+
+        // define direção
+        keys.ArrowUp = keys.ArrowDown = keys.ArrowLeft = keys.ArrowRight = false;
+        if (distance < joystick.deadzone) return;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+        if (absDx > absDy) {
+            dx > 0 ? (keys.ArrowRight = true) : (keys.ArrowLeft = true);
+        } else {
+            dy > 0 ? (keys.ArrowDown = true) : (keys.ArrowUp = true);
+        }
+    });
+
+    // soltar o toque
+    joystickContainer.addEventListener("touchend", (e) => {
+        let touch = [...e.changedTouches].find(t => t.identifier === joystick.touchId);
+        if (!touch) return;
+        joystick.active = false;
+        joystick.touchId = null;
+        joystickStick.style.transform = "translate(0, 0)";
+        keys.ArrowUp = keys.ArrowDown = keys.ArrowLeft = keys.ArrowRight = false;
+    });
+
+    // botão E (ação/interação)
+    actionButton.addEventListener("touchstart", () => {
+        actionButton.classList.add("pressed");
+        handleInteraction();
+    });
+    actionButton.addEventListener("touchend", () => {
+        actionButton.classList.remove("pressed");
+    });
+}
+
     function criarBotaoFullscreen() {
         // Evita duplicação
         if (document.getElementById('fullscreen-btn')) return;

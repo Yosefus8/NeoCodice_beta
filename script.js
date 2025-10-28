@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Desbloqueio de Áudio (Autoplay Policy) ---
